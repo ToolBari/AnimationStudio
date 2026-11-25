@@ -1,0 +1,22 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        // Fallback mirror — helps when repo.maven.apache.org is flaky/blocked
+        // on some mobile networks. Gradle tries repos in order and falls
+        // through if an artifact 404s or the connection drops.
+        maven { url 'https://maven-central.storage-download.googleapis.com/maven2' }
+    }
+}
+
+rootProject.name = "HtmlToMp4"
+include ':app'
