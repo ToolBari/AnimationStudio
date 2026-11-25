@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Place this at res/xml/file_paths.xml -->
+<paths>
+    <cache-path name="frames" path="frames/" />
+    <cache-path name="html_src" path="html_src/" />
+    <external-files-path name="videos" path="videos/" />
+    <external-files-path name="html_exports" path="html_exports/" />
+</paths>
