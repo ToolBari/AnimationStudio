@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8"><title>সফরের দোয়া</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:720px;height:1280px;overflow:hidden;background:#0b2559}
+body{position:relative;font-family:"Noto Sans Bengali","Kalpurush","Hind Siliguri",sans-serif;color:#fff;text-align:center}
+.a,.s{position:absolute}
+.s{inset:0;opacity:0;animation:sc var(--t) linear var(--d) both}
+.s.h{animation-name:sc0}.s.z{animation-name:sc2}
+@keyframes sc{0%{opacity:0}5%,95%{opacity:1}100%{opacity:0}}
+@keyframes sc0{0%,92%{opacity:1}100%{opacity:0}}
+@keyframes sc2{0%{opacity:0}5%,100%{opacity:1}}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+@keyframes pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
+@keyframes up{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+@keyframes bar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes gl{from{opacity:.1}to{opacity:1}}
+@keyframes fo{from{opacity:.9}to{opacity:0}}
+@keyframes sunr{from{transform:translateY(190px)}to{transform:translateY(-150px)}}
+@keyframes dsh{from{background-position:0 0}to{background-position:0 90px}}
+@keyframes bob{from{transform:translateY(0)}to{transform:translateY(-4px)}}
+@keyframes lit{from{opacity:.15;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes fly{from{transform:translateX(-100px)}to{transform:translateX(820px)}}
+@keyframes dr{from{transform:translateX(-320px)}to{transform:translateX(900px)}}
+@keyframes wl{from{transform:rotate(28deg)}to{transform:rotate(-18deg)}}
+@keyframes wr{from{transform:rotate(-28deg)}to{transform:rotate(18deg)}}
+.sky{inset:0;background:linear-gradient(#0a1f4d,#1d4f95 42%,#f2a35d 76%,#ffd98c)}
+.st{left:0;top:0;width:3px;height:3px;border-radius:50%;box-shadow:80px 130px #fff,200px 210px #fff,330px 120px #fff,470px 260px #fff,610px 170px #fff,650px 330px #fff,120px 340px #fff,540px 90px #fff;animation:fo 9s ease-in both}
+.glow{left:-180px;top:380px;width:1080px;height:840px;background:radial-gradient(closest-side,#ffe9a8,#ffcf7a66 40%,#0000);animation:gl 30s ease-in both}
+.sun{left:260px;top:640px;width:200px;height:200px;border-radius:50%;background:radial-gradient(#fffbe6,#ffd36b 60%,#ffb84a);box-shadow:0 0 60px #ffc95a;animation:sunr 30s cubic-bezier(.15,.7,.3,1) both}
+.hl{height:160px;border-radius:50%;background:#1a3150}
+.gr{left:0;top:800px;width:720px;height:480px;background:#12233a}
+.rd{left:0;top:800px;width:720px;height:480px;background:linear-gradient(#4a5268,#262b3b);clip-path:polygon(45% 0,55% 0,100% 100%,0 100%)}
+.ds{left:0;top:800px;width:720px;height:480px;background:repeating-linear-gradient(#ffe9a8 0 36px,#0000 36px 90px);clip-path:polygon(49.2% 0,50.8% 0,52.5% 100%,47.5% 100%);animation:dsh .7s linear infinite}
+.car{left:270px;top:1010px;width:180px;height:95px;animation:bob .5s ease-in-out infinite alternate}
+.car i{position:absolute;display:block}
+.cb{left:0;top:30px;width:180px;height:46px;border-radius:14px;background:#e8edf6}
+.cr{left:22px;top:0;width:136px;height:42px;border-radius:26px 26px 4px 4px;background:#cfd8e8}
+.cw{left:32px;top:8px;width:116px;height:26px;border-radius:16px 16px 2px 2px;background:#1b2b4b}
+.tl{top:46px;width:28px;height:12px;border-radius:4px;background:#ff4d4d}
+.wh{top:64px;width:36px;height:26px;border-radius:8px;background:#0c1220}
+.cs{left:6px;top:86px;width:168px;height:9px;border-radius:50%;background:#0007}
+.br{top:26px;left:130px;width:460px;height:46px;border:2px solid #e3c06a;border-radius:30px;background:#0b1f4acc;color:#ffe39a;font:700 26px/42px Georgia,serif;z-index:99}
+.cd{background:#0b1f4ae6;border:2px solid #e3c06a66;border-radius:28px;padding:30px 24px}
+.q{font-size:68px;font-weight:800;line-height:1.35;color:#ffe39a;text-shadow:0 4px 0 #0009}
+.ul{background:#ffe39a;border-radius:4px;transform-origin:left}
+.t2{font-size:46px;line-height:1.5;color:#fff3d6}
+.q2{font-size:60px;font-weight:800;color:#ffe39a}
+.o{width:220px;height:300px}
+.o b,.o span{position:absolute;display:block}
+.bl{left:35px;top:20px;width:150px;height:150px;border-radius:50%;background:radial-gradient(#fffbe6,#ffd36b 55%,#e8a63a);box-shadow:0 0 40px #ffd36b;animation:lit .5s ease-out calc(var(--d) + var(--i)*1.2s + .15s) both}
+.rg{left:15px;top:0;width:190px;height:190px;border-radius:50%;border:4px dotted #ffe39a;animation:fi .4s linear calc(var(--d) + var(--i)*1.2s + .15s) both,spin 6s linear infinite}
+.o span{left:0;top:215px;width:220px;font-size:30px;font-weight:700;color:#ffe39a;background:#0b1f4a;border:2px solid #e3c06a;border-radius:22px;padding:8px 0;animation:up .5s ease-out calc(var(--d) + var(--i)*1.2s + .3s) both}
+.bm{top:0;width:140px;height:760px;background:linear-gradient(#ffe9a8bb,#0000);clip-path:polygon(35% 0,65% 0,100% 100%,0 100%);animation:fi .5s ease-out calc(var(--d) + var(--i)*.15s) both}
+.cl{width:200px;height:50px;border-radius:40px;background:#ffffffd0;animation:dr 14s linear calc(var(--i)*-7s) infinite}
+.cl::before{content:"";position:absolute;left:34px;top:-24px;width:84px;height:60px;border-radius:50%;background:inherit}
+.bd{width:40px;height:20px;animation:fly 9s linear calc(var(--i)*-3s) infinite}
+.bd::before,.bd::after{content:"";position:absolute;top:6px;width:21px;height:4px;border-radius:4px;background:#fff}
+.bd::before{left:0;transform-origin:right center;animation:wl .4s ease-in-out infinite alternate}
+.bd::after{right:0;transform-origin:left center;animation:wr .4s ease-in-out infinite alternate}
+.ar{font-family:"Amiri","Noto Naskh Arabic","Scheherazade New","Traditional Arabic",serif;direction:rtl;font-size:46px;line-height:1.95;font-weight:700;color:#ffe39a}
+.bn{font-size:28px;line-height:1.5;color:#fff3d6}
+.pr{height:8px;border-radius:4px;background:#e3c06a;transform-origin:left}
+.m{font-size:42px;line-height:1.55}
+.ry{width:700px;height:700px;border-radius:50%;background:repeating-conic-gradient(#ffe9a855 0 7deg,#0000 7deg 20deg)}
+.sb{font-size:78px;font-weight:800;color:#ffe39a;padding:20px 10px}
+.e1{font-size:84px;font-weight:800;color:#ffe39a}
+.e2{font-size:34px;line-height:1.6;color:#fff3d6}
+.e3{background:#e3c06a;color:#0b1f4a;border-radius:40px;padding:14px 20px;font-size:36px;font-weight:700}
+</style></head><body>
+<div class="a sky"></div><div class="a st"></div><div class="a glow"></div><div class="a sun"></div>
+<div class="a hl" style="left:-120px;width:520px;top:735px"></div>
+<div class="a hl" style="left:330px;width:560px;top:750px;background:#16293f"></div>
+<div class="a gr"></div><div class="a rd"></div><div class="a ds"></div>
+<div class="a car"><i class="cs"></i><i class="cb"></i><i class="cr"></i><i class="cw"></i><i class="tl" style="left:8px"></i><i class="tl" style="left:144px"></i><i class="wh" style="left:14px"></i><i class="wh" style="left:130px"></i></div>
+
+<!-- 0–2.4 হুক -->
+<div class="s h" style="--d:0s;--t:2.4s">
+ <div class="a q" style="left:50px;right:50px;top:360px;animation:pop .5s ease-out .1s both">গাড়িতে ওঠার আগে এই দোয়াটা পড়েন?</div>
+ <div class="a ul" style="left:210px;top:600px;width:300px;height:6px;animation:bar .6s ease-out .7s both"></div>
+</div>
+<!-- 2.4–7.4 সূর্য ওঠা -->
+<div class="s" style="--d:2.4s;--t:5s">
+ <div class="a cd t2" style="left:40px;top:300px;width:640px;animation:up .6s ease-out calc(var(--d) + .3s) both">নবীজি ﷺ সফরে বের হওয়ার সময় বলতেন —</div>
+</div>
+<!-- 7.4–11.9 তাকবীর -->
+<div class="s" style="--d:7.4s;--t:4.5s">
+ <div class="a o" style="--i:0;left:30px;top:380px"><b class="rg"></b><b class="bl"></b><span>আল্লাহু আকবর</span></div>
+ <div class="a o" style="--i:1;left:250px;top:380px"><b class="rg"></b><b class="bl"></b><span>আল্লাহু আকবর</span></div>
+ <div class="a o" style="--i:2;left:470px;top:380px"><b class="rg"></b><b class="bl"></b><span>আল্লাহু আকবর</span></div>
+</div>
+<!-- 11.9–13.5 আকাশ খুলে আলো -->
+<div class="s" style="--d:11.9s;--t:1.6s">
+ <div class="a bm" style="--i:0;left:60px"></div><div class="a bm" style="--i:1;left:290px"></div><div class="a bm" style="--i:2;left:520px"></div>
+ <div class="a cd q2" style="left:60px;top:470px;width:600px;animation:pop .5s ease-out calc(var(--d) + .2s) both">তারপর এই আয়াত</div>
+</div>
+<!-- 13.5–27.6 আয়াত -->
+<div class="s" style="--d:13.5s;--t:14.1s">
+ <div class="a cl" style="--i:0;left:0;top:105px"></div><div class="a cl" style="--i:1;left:0;top:125px"></div>
+ <div class="a bd" style="--i:0;left:0;top:92px"></div><div class="a bd" style="--i:1;left:0;top:118px"></div><div class="a bd" style="--i:2;left:0;top:140px"></div>
+ <div class="a cd" style="left:30px;top:170px;width:660px;height:610px;animation:fi .6s ease-out calc(var(--d) + .2s) both"></div>
+ <div class="a ar" style="left:50px;top:200px;width:620px;animation:fi .8s ease-out calc(var(--d) + .5s) both">سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ</div>
+ <div class="a bn" style="left:50px;top:610px;width:620px;animation:up .8s ease-out calc(var(--d) + 3s) both">সুবহানাল্লাযী সাখখারা লানা হাযা ওয়ামা কুন্না লাহু মুক্বরিনীন, ওয়া ইন্না ইলা রব্বিনা লামুনক্বলিবূন</div>
+ <div class="a pr" style="left:60px;top:762px;width:600px;animation:bar 13.8s linear calc(var(--d) + .2s) both"></div>
+</div>
+<!-- 27.6–33 অর্থ -->
+<div class="s" style="--d:27.6s;--t:5.4s">
+ <div class="a cd m" style="left:40px;top:250px;width:640px;animation:up .6s ease-out calc(var(--d) + .2s) both">পবিত্র সেই সত্তা, যিনি এই বাহনকে আমাদের বশ করেছেন।</div>
+ <div class="a cd m" style="left:40px;top:490px;width:640px;animation:up .6s ease-out calc(var(--d) + 3s) both">আর আমরা তো আমাদের রবের কাছেই ফিরে যাবো।</div>
+</div>
+<!-- 33–36 সফরের সাথী -->
+<div class="s" style="--d:33s;--t:3s">
+ <div class="a ry" style="left:10px;top:240px;animation:spin 40s linear infinite"></div>
+ <div class="a cd m" style="left:40px;top:230px;width:640px;animation:pop .5s ease-out calc(var(--d) + .2s) both">সফরের সাথী আল্লাহ নিজে।</div>
+ <div class="a cd sb" style="left:80px;top:420px;width:560px;animation:pop .5s ease-out calc(var(--d) + 1.3s) both">সুবহানাল্লাহ!</div>
+</div>
+<!-- 36–39.31 এন্ড কার্ড -->
+<div class="s z" style="--d:36s;--t:3.31s">
+ <div class="a cd" style="left:40px;top:230px;width:640px;height:620px;border:3px solid #e3c06a"></div>
+ <div class="a e1" style="left:60px;top:290px;width:600px;animation:pop .6s ease-out calc(var(--d) + .2s) both">সুবহানাল্লাহ!</div>
+ <div class="a ul" style="left:210px;top:440px;width:300px;height:5px;animation:bar .6s ease-out calc(var(--d) + .6s) both"></div>
+ <div class="a e2" style="left:70px;top:480px;width:580px;animation:fi .6s ease-out calc(var(--d) + .8s) both">সহীহ মুসলিম ১৩৪২ · সূরা আয-যুখরুফ ৪৩:১৩-১৪</div>
+ <div class="a e3" style="left:110px;top:700px;width:500px;animation:up .6s ease-out calc(var(--d) + 1.2s) both">দৈনন্দিন মাসনূন দোয়া</div>
+</div>
+<div class="a br">☾ Inspiring Islamic Thought</div>
+</body></html>
