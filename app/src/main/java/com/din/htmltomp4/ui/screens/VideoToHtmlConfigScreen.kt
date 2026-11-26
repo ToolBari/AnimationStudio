@@ -48,6 +48,17 @@ fun VideoToHtmlConfigScreen(
 
         Spacer(Modifier.height(20.dp))
 
+        // Honest labelling per FIX_SPEC: the export embeds the video's frames
+        // and audio into a file that plays in a browser. It is NOT an editable
+        // animation — label it "playable HTML", never an animation.
+        Text(
+            "Creates playable HTML — your video's frames and audio, playable in a browser. It is not an editable animation.",
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(bottom = 4.dp)
+        )
+
+        Spacer(Modifier.height(16.dp))
+
         SectionLabel("Frame rate")
         Text(
             "Lower FPS keeps the generated HTML file smaller.",
