@@ -40,10 +40,18 @@ class HtmlAnimationCaptureEngine(private val activity: Activity) {
 
     /**
      * Loads [htmlFile] into a hidden WebView sized to [config.resolution],
-     * waits for pageFinished, then walks the animation clock forward and
-     * captures one PixelCopy frame per tick, writing sequential JPEGs into
-     * a fresh temp directory. Emits progress as a cold Flow so the caller
-     * can cancel cleanly (e.g. if the user backs out of Processing screen).
+     * waits for pageFinished, then captures one PixelCopy frame per tick,
+     * writing sequential JPEGs into a fresh temp directory. Emits progress
+     * as a cold Flow so the caller can cancel cleanly (e.g. if the user
+     * backs out of Processing screen).
+     *
+     * DETERMINISTIC CAPTURE: the animation clock is frozen right after
+     * load (every CSS animation paused via JS), and before each frame
+     * every animation is SEEKED to that frame's exact animation time
+     * (N * frameIntervalMs). Frame N therefore shows exactly animation
+     * time N / frameRate, no matter how slow the phone captures — the
+     * output no longer depends on wall-clock capture speed. Pages driven
+     * by requestAnimationFrame will not seek (only CSS animations do).
      */
     fun captureFrames(context: Context, htmlFile: File, config: ConversionConfig): Flow<FrameCaptureEvent> =
         callbackFlow {
@@ -67,14 +75,28 @@ class HtmlAnimationCaptureEngine(private val activity: Activity) {
                     // Small settle delay so CSS animations/webfonts/JS init
                     // have a beat to start from frame 0 consistently.
                     kotlinx.coroutines.delay(150)
+                    // Freeze the animation clock: pause every CSS animation
+                    // so nothing advances on wall-clock time from here on.
+                    // Each frame below is SEEKED to its exact time instead.
+                    evalJs(view, "document.getAnimations().forEach(a => a.pause())")
                 }
 
-                val frameIntervalMs = 1000L / config.frameRate
+                // Exact per-frame animation time in ms. A Double, so 60fps
+                // (16.67ms) and 30fps (33.33ms) don't drift from integer
+                // truncation over a long capture.
+                val frameIntervalMs = 1000.0 / config.frameRate
                 val totalFrames = config.totalFrames
                 val captureStartTime = System.currentTimeMillis()
 
                 while (frameIndex < totalFrames) {
+                    // Seek every animation to this frame's exact animation
+                    // time (frame N shows animation time N / frameRate),
+                    // then let the WebView apply the new state before the
+                    // synchronous draw below.
+                    val targetTimeMs = (frameIndex * frameIntervalMs).toLong()
                     val bitmap = withContext(Dispatchers.Main) {
+                        evalJs(view, "document.getAnimations().forEach(a => a.currentTime = $targetTimeMs)")
+                        kotlinx.coroutines.delay(16)
                         captureSingleFrame(view, config.resolution.width, config.resolution.height)
                     }
 
@@ -86,26 +108,6 @@ class HtmlAnimationCaptureEngine(private val activity: Activity) {
 
                     frameIndex++
                     trySend(FrameCaptureEvent.Progress(frameIndex, totalFrames, framePath))
-
-                    // Target absolute elapsed time (frameIndex * interval) rather
-                    // than sleeping a flat interval after each frame. Capturing
-                    // + JPEG-encoding a frame takes real time on its own — if we
-                    // just slept frameIntervalMs on top of that every iteration,
-                    // the WebView's real (wall-clock-driven) animation would
-                    // advance further per output frame than intended, so
-                    // playback at the declared FPS ends up looking sped up.
-                    // Sleeping only the remainder to hit the next absolute
-                    // target keeps output frame N aligned with real elapsed
-                    // time N * frameIntervalMs, and any per-frame overhead that
-                    // can't be caught up on gets absorbed instead of compounding.
-                    val targetElapsed = frameIndex * frameIntervalMs
-                    val actualElapsed = System.currentTimeMillis() - captureStartTime
-                    val remaining = targetElapsed - actualElapsed
-                    if (remaining > 0) {
-                        withContext(Dispatchers.Main) {
-                            kotlinx.coroutines.delay(remaining)
-                        }
-                    }
                 }
 
                 trySend(FrameCaptureEvent.Done(frameDir, frameIndex, System.currentTimeMillis() - captureStartTime))
@@ -159,6 +161,16 @@ class HtmlAnimationCaptureEngine(private val activity: Activity) {
         hostContainer = container
         webView = view
         return view
+    }
+
+    /**
+     * Runs [script] in the WebView and suspends until it completes.
+     * Must be called from the main thread (evaluateJavascript requires it).
+     */
+    private suspend fun evalJs(view: WebView, script: String) {
+        val done = CompletableDeferred<Unit>()
+        view.evaluateJavascript(script) { done.complete(Unit) }
+        done.await()
     }
 
     private fun captureSingleFrame(view: WebView, width: Int, height: Int): Bitmap {
