@@ -104,7 +104,7 @@ fun DashboardScreen(
                         ),
                         ConversionAction(
                             title = "Video → HTML",
-                            subtitle = "Turn a video into a playable HTML animation",
+                            subtitle = "Turn a video into playable HTML",
                             icon = Icons.Default.Videocam,
                             gradient = Brush.linearGradient(colors = listOf(SecondaryTeal, PrimaryPurpleVariant)),
                             onClick = { videoFilePicker.launch("video/*") }
