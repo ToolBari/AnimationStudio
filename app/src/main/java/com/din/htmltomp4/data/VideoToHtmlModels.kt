@@ -4,8 +4,10 @@ import android.net.Uri
 
 /** User-selectable settings for extracting a video into a playable HTML file. */
 data class VideoToHtmlConfig(
-    val targetFps: Int = 12,           // lower fps keeps the generated HTML small
-    val scale: HtmlScale = HtmlScale.P480,
+    // Shorts default per FIX_SPEC: 24 FPS / 720p / Medium.
+    // 12 FPS is choppy, 30 FPS makes the file much bigger.
+    val targetFps: Int = 24,
+    val scale: HtmlScale = HtmlScale.P720,
     val quality: HtmlFrameQuality = HtmlFrameQuality.MEDIUM,
     val limitToSeconds: Int? = null,   // null = full video length
     val outputFileName: String = "video_export_${System.currentTimeMillis()}"
