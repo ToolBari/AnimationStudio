@@ -27,9 +27,26 @@ fun ConfigScreen(
 ) {
     val currentConfig by viewModel.config.collectAsState()
 
-    var resolution by remember { mutableStateOf(currentConfig.resolution) }
+    var orientationIndex by remember {
+        mutableStateOf(if (currentConfig.resolution.isPortrait) 0 else 1)
+    } // 0 = Portrait 9:16, 1 = Landscape 16:9
+    var sizeIndex by remember {
+        mutableStateOf(
+            if (currentConfig.resolution == Resolution.HD_720P ||
+                currentConfig.resolution == Resolution.PORTRAIT_720P
+            ) 0 else 1
+        )
+    } // 0 = 720p, 1 = 1080p
     var frameRate by remember { mutableStateOf(currentConfig.frameRate) }
     var duration by remember { mutableStateOf(currentConfig.durationSeconds) }
+
+    // Resolution is derived from the orientation + size pickers.
+    val resolution = when {
+        orientationIndex == 0 && sizeIndex == 0 -> Resolution.PORTRAIT_720P
+        orientationIndex == 0 -> Resolution.PORTRAIT_1080P
+        sizeIndex == 0 -> Resolution.HD_720P
+        else -> Resolution.HD_1080P
+    }
 
     Column(
         modifier = Modifier
@@ -47,11 +64,20 @@ fun ConfigScreen(
 
         Spacer(modifier = Modifier.height(20.dp))
 
+        SectionLabel("Orientation")
+        SegmentedChips(
+            options = listOf("Portrait 9:16", "Landscape 16:9"),
+            selectedIndex = orientationIndex,
+            onSelect = { orientationIndex = it }
+        )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
         SectionLabel("Resolution")
         SegmentedChips(
-            options = Resolution.entries.map { it.label },
-            selectedIndex = Resolution.entries.indexOf(resolution),
-            onSelect = { resolution = Resolution.entries[it] }
+            options = listOf("720p", "1080p"),
+            selectedIndex = sizeIndex,
+            onSelect = { sizeIndex = it }
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -83,6 +109,14 @@ fun ConfigScreen(
         Text(
             text = "This will capture $estimatedFrames frames at ${resolution.label}.",
             style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
+        Text(
+            text = "Note: frame-accurate capture works with CSS animations. " +
+                "Pages animated with JavaScript (requestAnimationFrame) " +
+                "can't be frame-seeked.",
+            style = MaterialTheme.typography.bodySmall,
+            color = OnDarkTextMuted,
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
