@@ -14,7 +14,12 @@ data class ConversionConfig(
 
 enum class Resolution(val width: Int, val height: Int, val label: String) {
     HD_720P(1280, 720, "720p"),
-    HD_1080P(1920, 1080, "1080p")
+    HD_1080P(1920, 1080, "1080p"),
+    PORTRAIT_720P(720, 1280, "720p portrait"),
+    PORTRAIT_1080P(1080, 1920, "1080p portrait");
+
+    /** True for the 9:16 presets (width < height). */
+    val isPortrait: Boolean get() = width < height
 }
 
 /** Drives the Processing screen UI. */
