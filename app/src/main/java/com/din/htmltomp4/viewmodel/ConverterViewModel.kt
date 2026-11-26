@@ -68,7 +68,6 @@ class ConverterViewModel(application: Application) : AndroidViewModel(applicatio
 
             try {
                 var frameDirResult: File? = null
-                var actualDurationMsResult: Long? = null
 
                 engine.captureFrames(context, htmlFile, cfg).collect { event ->
                     when (event) {
@@ -81,7 +80,6 @@ class ConverterViewModel(application: Application) : AndroidViewModel(applicatio
                         }
                         is FrameCaptureEvent.Done -> {
                             frameDirResult = event.frameDir
-                            actualDurationMsResult = event.actualDurationMs
                         }
                         is FrameCaptureEvent.Failed -> {
                             val detail = "${event.error.javaClass.simpleName}: ${event.error.message}"
@@ -98,19 +96,14 @@ class ConverterViewModel(application: Application) : AndroidViewModel(applicatio
                 val outputDir = File(context.getExternalFilesDir(null), "videos").apply { mkdirs() }
                 val outputFile = File(outputDir, "${cfg.outputFileName}.mp4")
 
-                // Encode using the FPS actually achieved during capture rather
-                // than the nominal config value. If the device couldn't quite
-                // keep up with the target FPS (e.g. 1080p JPEG encoding taking
-                // longer than the frame interval), using the nominal rate here
-                // would make playback faster than the real recorded motion —
-                // this keeps video duration matching real elapsed capture time.
-                val measuredFps = actualDurationMsResult
-                    ?.takeIf { it > 0 }
-                    ?.let { durationMs -> (cfg.totalFrames * 1000.0 / durationMs) }
-                    ?.coerceIn(1.0, cfg.frameRate.toDouble()) // never exceed the requested rate
-                    ?: cfg.frameRate.toDouble()
+                // Encode at the CONFIG fps (30/60 as chosen). Capture is now
+                // deterministic — every frame was seeked to its exact
+                // animation time — so the wall-clock capture duration is
+                // meaningless and must not set the output fps (the old
+                // measured-fps mux stretched a 39s animation into 387s).
+                val fps = cfg.frameRate.toDouble()
 
-                encoder.encode(frameDir, measuredFps, cfg.totalFrames, outputFile).collect { event ->
+                encoder.encode(frameDir, fps, cfg.totalFrames, outputFile).collect { event ->
                     when (event) {
                         is EncodeEvent.Progress -> {
                             _state.value = ConversionState.Encoding(event.percent)
